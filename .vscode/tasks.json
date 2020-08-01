@@ -1,0 +1,20 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compile Haskell",
+      "type": "shell",
+      
+      // "command": "cd ${fileDirname} && ${workspaceFolder}/build_haskell.sh ${file} ${fileBasenameNoExtension}",
+      "command": "OUTDIR=${fileDirname}/bin && mkdir -p $OUTDIR && ghc ${file} -outputdir $OUTDIR -o $OUTDIR/${fileBasenameNoExtension}",
+
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
