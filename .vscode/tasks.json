@@ -6,8 +6,7 @@
     {
       "label": "Compile Haskell",
       "type": "shell",
-      
-      // "command": "cd ${fileDirname} && ${workspaceFolder}/build_haskell.sh ${file} ${fileBasenameNoExtension}",
+
       "command": "OUTDIR=${fileDirname}/bin && mkdir -p $OUTDIR && ghc ${file} -outputdir $OUTDIR -o $OUTDIR/${fileBasenameNoExtension}",
 
       "problemMatcher": [],
