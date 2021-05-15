@@ -205,12 +205,34 @@ lookupTitle = lookupValue titleTag titleSubfield
 lookupAuthor :: MarcRecordRaw -> Maybe Author
 lookupAuthor = lookupValue authorTag authorSubfield
 
+marcToPairs :: B.ByteString -> [(Maybe Title, Maybe Author)]
+marcToPairs marcStream = zip titles authors
+  where
+    records = allRecords marcStream
+    titles = map lookupTitle records
+    authors = map lookupAuthor records
+
+pairsToBooks :: [(Maybe Title, Maybe Author)] -> [Book]
+pairsToBooks pairs = map (\(title, author) -> Book {
+    title = fromJust title,
+    author = fromJust author
+  }) justPairs
+  where justPairs = filter (\(title, author) -> isJust title && isJust author) pairs
+
+processRecords :: Int -> B.ByteString -> Html
+processRecords recordsToProcess = booksToHtml . pairsToBooks . take recordsToProcess . marcToPairs
+
 
 main :: IO ()
 
 -- main = TIO.writeFile "books.html" (booksToHtml myBooks)
 
+-- main = do
+--   marcData <- B.readFile "sample.mrc"
+--   let marcRecords = allRecords marcData
+--   print (length marcRecords)
+
 main = do
   marcData <- B.readFile "sample.mrc"
-  let marcRecords = allRecords marcData
-  print (length marcRecords)
+  let processed = processRecords 500 marcData
+  TIO.writeFile "books.html" processed
