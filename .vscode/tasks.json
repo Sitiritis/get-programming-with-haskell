@@ -7,7 +7,7 @@
       "label": "Compile Haskell",
       "type": "shell",
 
-      "command": "OUTDIR=${fileDirname}/bin && mkdir -p $OUTDIR && ghc ${file} -outputdir $OUTDIR -o $OUTDIR/${fileBasenameNoExtension}",
+      "command": "cd ${fileDirname} && OUTDIR=${fileDirname}/bin && mkdir -p $OUTDIR && ghc ${file} -outputdir $OUTDIR -o $OUTDIR/${fileBasenameNoExtension}",
 
       "problemMatcher": [],
       "group": {
