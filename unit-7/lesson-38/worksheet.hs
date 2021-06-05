@@ -148,7 +148,7 @@ flipEither :: Either a b -> Either b a
 flipEither (Left err) = Right err
 flipEither (Right val) = Left val
 
-bothFailed :: Either e r -> Either e r -> (e -> e -> e) -> Either e r
+bothFailed :: Either e1 r -> Either e2 r -> (e1 -> e2 -> e) -> Either e r
 bothFailed f s combineErrors = flipEither $ do
   e1 <- flipEither f
   e2 <- flipEither s
